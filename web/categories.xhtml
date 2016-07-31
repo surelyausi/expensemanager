@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>BootsFaces Basic Page</title>
+</h:head>
+<h:body>
+    <ui:composition xmlns="http://www.w3.org/1999/xhtml">
+        <b:container>
+            <h:form>
+                <b:row>
+                    <h1>Create Category</h1>
+                </b:row>
+                <b:row>
+                    <b:column>
+                        <h2>Name</h2>
+                    </b:column>
+                </b:row>
+                <b:row>
+                    <b:column>
+                        <b:inputText placeholder="Type something here..." value="#{categoryBean.newCategoryName}"/>
+                    </b:column>
+                    <b:column>
+                        <b:commandButton value="Submit" action="#{categoryBean.createNew}">
+                        </b:commandButton>
+                    </b:column>
+                </b:row>
+            </h:form>
+            <b:row>
+                <b:dataTable value="#{categoryBean.categories}" var="cat">
+                    <b:dataTableColumn value="#{cat.id}"/>
+                    <b:dataTableColumn value="#{cat.name}"/>
+                </b:dataTable>
+            </b:row>
+        </b:container>
+    </ui:composition>
+</h:body>
+</html>
