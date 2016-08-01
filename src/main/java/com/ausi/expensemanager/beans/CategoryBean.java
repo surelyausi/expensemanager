@@ -7,7 +7,9 @@ package com.ausi.expensemanager.beans;
 import com.ausi.expensemanager.domain.Category;
 import com.ausi.expensemanager.service.CategoryService;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @ManagedBean(name="categoryBean")
+@SessionScoped
 public class CategoryBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,6 +30,10 @@ public class CategoryBean implements Serializable {
 
     public CategoryBean() {
         categoryService = new CategoryService();
+    }
+
+    @PostConstruct
+    public void init() {
         loadCategories();
     }
 
@@ -48,10 +55,11 @@ public class CategoryBean implements Serializable {
 
     public void createNew() {
         if(newCategoryName != null && !newCategoryName.isEmpty()) {
-            System.out.println(newCategoryName);
+            //System.out.println(newCategoryName);
             Category category = new Category(1, newCategoryName);
             categoryService.create(category);
         }
+        loadCategories();
         reloadPage();
     }
 
@@ -63,4 +71,14 @@ public class CategoryBean implements Serializable {
             e.printStackTrace();
         }
     }
+
+    public void delete(Category category){
+        //TODO: Check if category got no associations
+        //Category categoryToDelete = (Category) categoryDataModel.getRowData();
+        System.out.println(category);
+        categoryService.delete(category);
+        loadCategories();
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.ausi.expensemanager.service;
 
 import com.ausi.expensemanager.dao.impl.file.CategoryDAOFileImpl;
+import com.ausi.expensemanager.dao.impl.hibernate.CategoryDAOHibernateImpl;
 import com.ausi.expensemanager.dao.interf.CategoryDAO;
 import com.ausi.expensemanager.domain.Category;
 
@@ -14,7 +15,7 @@ public class CategoryService {
     private CategoryDAO categoryDAO;
 
     public CategoryService() {
-        categoryDAO = new CategoryDAOFileImpl();
+        categoryDAO = new CategoryDAOHibernateImpl();
     }
 
     public void create(Category category) {

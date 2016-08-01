@@ -70,7 +70,7 @@ public class ExpenseDAOFileImpl implements ExpenseDAO {
 
                     Category category = categoryDAO.read(categoryid);
 
-                    Expense expenseEntity = new Expense(id, description, amount, simpleDateFormat.parse(datetime), category);
+                    Expense expenseEntity = new Expense(id, description, amount, simpleDateFormat.parse(datetime), category, categoryid);
                     expenses.add(expenseEntity);
                 }
             }

@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <title>BootsFaces Basic Page</title>
+
+
+</h:head>
+<h:body>
+    <b:navBar brand="Expense Manager" brandHref="#" inverse="true">
+        <b:navbarLinks>
+            <b:navLink value="Home" href="index.html"></b:navLink>
+            <b:navLink value="Categories" href="#"></b:navLink>
+        </b:navbarLinks>
+    </b:navBar>
+    <b:container>
+        <h:form>
+            <b:row>
+                <h3>Create Expense</h3>
+            </b:row>
+            <b:row>
+                <b:column>
+                    <h4>Description</h4>
+                </b:column>
+
+                <b:column>
+                    <b:inputText placeholder="Type something here..." required="true" value="#{expenseBean.newExpenseDescription}"/>
+                </b:column>
+            </b:row>
+
+            <b:row>
+                <b:column>
+                    <h4>Amount</h4>
+                </b:column>
+                <b:column></b:column>
+
+
+                <b:column>
+                    <b:inputText placeholder="Type something here..." required="true"  value="#{expenseBean.newExpenseAmount}"/>
+                </b:column>
+            </b:row>
+
+
+            <b:row>
+                <b:column>
+                    <h4>Date and Time</h4>
+                </b:column>
+                <b:column></b:column>
+
+
+                <b:column>
+                    <b:dateTimePicker id="datetimepicker" placeholder="Type something here..."
+                                      value="#{expenseBean.newExpenseDateTime}"/>
+                </b:column>
+            </b:row>
+
+            <b:row>
+                <b:column>
+                    <h4>Category</h4>
+                </b:column>
+
+                <b:column>
+                    <b:selectOneMenu value="#{expenseBean.newExpenseCategoryID}" id="categoryID" required="true">
+                        <f:selectItems value="#{categoryBean.categories}" var="c" itemValue="#{c.id}"
+                                       itemLabel="#{c.name}"/>
+                    </b:selectOneMenu>
+                </b:column>
+            </b:row>
+
+            <b:row>
+                <b:column>
+                    <b:commandButton value="Submit" action="#{expenseBean.createNew}"/>;
+                </b:column>
+            </b:row>
+
+        </h:form>
+        <b:row>
+
+            <h:form>
+                <b:dataTable value="#{expenseBean.expenses}" var="exp">
+                    <b:dataTableColumn value="#{exp.id}"/>
+                    <b:dataTableColumn value="#{exp.description}"/>
+                    <b:dataTableColumn value="#{exp.amount}"/>
+                    <b:dataTableColumn value="#{exp.datetime}"/>
+                    <b:dataTableColumn value="#{exp.category.name}" label="Category"/>
+                </b:dataTable>
+            </h:form>
+        </b:row>
+    </b:container>
+</h:body>
+</html>

@@ -1,10 +1,18 @@
 package com.ausi.expensemanager.domain;
 
+import javax.persistence.*;
+
 /**
  * Created by Schurl on 31.07.2016.
  */
+@Entity
+@Table(name="CATEGORY", uniqueConstraints = {@UniqueConstraint(columnNames = {"ID"})})
 public class Category {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="ID", nullable=false, unique=true, length=11)
     private int id;
+    @Column(name="NAME", nullable = true, length = 200)
     private String name;
 
     public Category(int id, String name) {
