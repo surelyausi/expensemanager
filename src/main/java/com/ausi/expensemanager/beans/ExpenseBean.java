@@ -36,7 +36,8 @@ public class ExpenseBean implements Serializable {
     public String newExpenseDescription = "";
     public String newExpenseAmount = "";
     public String newExpenseCategoryID = "";
-    public String newExpenseDateTime = "";
+
+    public Date newExpenseDateAndTime = null;
 
     public ExpenseBean() {
         expenseService = new ExpenseService();
@@ -46,6 +47,13 @@ public class ExpenseBean implements Serializable {
     @PostConstruct
     public void init() {
         loadExpenses();
+        setDateNow();
+    }
+
+    private void setDateNow() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        Date now = new Date(System.currentTimeMillis());
+        newExpenseDateAndTime = now;
     }
 
     private void loadExpenses() {
@@ -76,14 +84,6 @@ public class ExpenseBean implements Serializable {
         this.newExpenseAmount = newExpenseAmount;
     }
 
-    public String getNewExpenseDateTime() {
-        return newExpenseDateTime;
-    }
-
-    public void setNewExpenseDateTime(String newExpenseDateTime) {
-        this.newExpenseDateTime = newExpenseDateTime;
-    }
-
     public String getNewExpenseCategoryID() {
         return newExpenseCategoryID;
     }
@@ -92,26 +92,27 @@ public class ExpenseBean implements Serializable {
         this.newExpenseCategoryID = newExpenseCategoryID;
     }
 
+    public Date getNewExpenseDateAndTime() {
+        return newExpenseDateAndTime;
+    }
+
+    public void setNewExpenseDateAndTime(Date newExpenseDateAndTime) {
+        this.newExpenseDateAndTime = newExpenseDateAndTime;
+    }
 
     private void reloadPage() {
         try {
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
             ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+            setDateNow();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void createNew() {
-        System.out.println(newExpenseAmount);
-        System.out.println(getNewExpenseDescription());
-        System.out.println(getNewExpenseDateTime());
-        System.out.println(newExpenseCategoryID);
-        if (newExpenseAmount != null && !newExpenseAmount.isEmpty() && newExpenseDescription != null && !newExpenseDescription.isEmpty() && newExpenseDateTime != null && !newExpenseDateTime.isEmpty() && newExpenseCategoryID != null && !newExpenseCategoryID.isEmpty()) {
-
-                //TODO: TAKE REAL DATETIME
-                //DateFormat simpleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
-                Expense expense = new Expense(1, newExpenseDescription, Double.valueOf(newExpenseAmount), new Date(System.currentTimeMillis()), categoryService.read(Integer.valueOf(newExpenseCategoryID)),Integer.valueOf(newExpenseCategoryID));
+        if (newExpenseAmount != null && !newExpenseAmount.isEmpty() && newExpenseDescription != null && !newExpenseDescription.isEmpty() && newExpenseDateAndTime != null && newExpenseCategoryID != null && !newExpenseCategoryID.isEmpty()) {
+                Expense expense = new Expense(1, newExpenseDescription, Double.valueOf(newExpenseAmount), newExpenseDateAndTime, categoryService.read(Integer.valueOf(newExpenseCategoryID)),Integer.valueOf(newExpenseCategoryID));
                 expenseService.create(expense);
         }
         loadExpenses();

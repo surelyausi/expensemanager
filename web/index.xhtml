@@ -27,7 +27,8 @@
                 </b:column>
 
                 <b:column>
-                    <b:inputText placeholder="Type something here..." required="true" value="#{expenseBean.newExpenseDescription}"/>
+                    <b:inputText placeholder="Type something here..." required="true"
+                                 value="#{expenseBean.newExpenseDescription}"/>
                 </b:column>
             </b:row>
 
@@ -39,7 +40,8 @@
 
 
                 <b:column>
-                    <b:inputText placeholder="Type something here..." required="true"  value="#{expenseBean.newExpenseAmount}"/>
+                    <b:inputText placeholder="Type something here..." required="true"
+                                 value="#{expenseBean.newExpenseAmount}"/>
                 </b:column>
             </b:row>
 
@@ -53,7 +55,9 @@
 
                 <b:column>
                     <b:dateTimePicker id="datetimepicker" placeholder="Type something here..."
-                                      value="#{expenseBean.newExpenseDateTime}"/>
+                                      format="DD.MM.YYYY HH:mm" value="#{expenseBean.newExpenseDateAndTime}">
+                        <f:convertDateTime pattern="dd.MM.yyyy HH:mm" locale="de_AT" timeZone="Europe/Vienna" type="both"/>
+                    </b:dateTimePicker>
                 </b:column>
             </b:row>
 
@@ -72,11 +76,13 @@
 
             <b:row>
                 <b:column>
-                    <b:commandButton value="Submit" action="#{expenseBean.createNew}"/>;
+                    <b:commandButton value="Submit" action="#{expenseBean.createNew}"/>
                 </b:column>
             </b:row>
 
         </h:form>
+    </b:container>
+    <b:container style="margin-top: 20px;">
         <b:row>
 
             <h:form>
