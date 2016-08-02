@@ -10,15 +10,17 @@ import com.ausi.expensemanager.service.CategoryService;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 @ManagedBean(name="categoryBean")
-@SessionScoped
+@ViewScoped
 public class CategoryBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -74,11 +76,13 @@ public class CategoryBean implements Serializable {
 
     public void delete(Category category){
         //TODO: Check if category got no associations
-        //Category categoryToDelete = (Category) categoryDataModel.getRowData();
-        System.out.println(category);
         categoryService.delete(category);
         loadCategories();
     }
+/*
+    public void delete(Category e){
+        System.out.println(e);
+    }*/
 
 
 }

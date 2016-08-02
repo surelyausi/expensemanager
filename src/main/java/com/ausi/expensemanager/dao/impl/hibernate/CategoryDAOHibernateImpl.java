@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import javax.faces.bean.SessionScoped;
 import java.util.List;
@@ -52,13 +53,21 @@ public class CategoryDAOHibernateImpl implements CategoryDAO {
     @Override
     public void update(Category category) {
         Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
         session.update(category);
+        tx.commit();
+        session.close();
 
     }
 
     @Override
     public void delete(Category category) {
         Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+
         session.delete(category);
+
+        transaction.commit();
+        session.close();
     }
 }
