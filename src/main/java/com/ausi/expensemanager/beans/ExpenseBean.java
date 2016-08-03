@@ -6,6 +6,7 @@ import com.ausi.expensemanager.service.CategoryService;
 import com.ausi.expensemanager.service.ExpenseService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -112,11 +113,16 @@ public class ExpenseBean implements Serializable {
 
     public void createNew() {
         if (newExpenseAmount != null && !newExpenseAmount.isEmpty() && newExpenseDescription != null && !newExpenseDescription.isEmpty() && newExpenseDateAndTime != null && newExpenseCategoryID != null && !newExpenseCategoryID.isEmpty()) {
-                Expense expense = new Expense(1, newExpenseDescription, Double.valueOf(newExpenseAmount), newExpenseDateAndTime, categoryService.read(Integer.valueOf(newExpenseCategoryID)),Integer.valueOf(newExpenseCategoryID));
-                expenseService.create(expense);
+            Expense expense = new Expense(1, newExpenseDescription, Double.valueOf(newExpenseAmount), newExpenseDateAndTime, categoryService.read(Integer.valueOf(newExpenseCategoryID)), Integer.valueOf(newExpenseCategoryID));
+            expenseService.create(expense);
         }
         loadExpenses();
         reloadPage();
+    }
+
+    public void delete(Expense expense) {
+        expenseService.delete(expense);
+        loadExpenses();
     }
 
 

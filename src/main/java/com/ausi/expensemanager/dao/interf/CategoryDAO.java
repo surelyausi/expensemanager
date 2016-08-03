@@ -13,4 +13,5 @@ public interface CategoryDAO {
     List<Category> readAll();
     void update(Category category);
     void delete(Category category);
+    boolean hasEntries(Category category);
 }

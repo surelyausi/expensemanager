@@ -2,6 +2,7 @@ package com.ausi.expensemanager.dao.impl.file;
 
 import com.ausi.expensemanager.dao.db.FileDBConnector;
 import com.ausi.expensemanager.dao.interf.CategoryDAO;
+import com.ausi.expensemanager.dao.interf.ExpenseDAO;
 import com.ausi.expensemanager.domain.Category;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -25,9 +26,11 @@ public class CategoryDAOFileImpl implements CategoryDAO {
 
     private int nextCategoryID = 1;
 
+    private ExpenseDAO expenseDAO;
+
     public CategoryDAOFileImpl() {
         categories = new ArrayList<>();
-
+        expenseDAO = new ExpenseDAOFileImpl();
         parseCategoryFile();
     }
 
@@ -110,5 +113,10 @@ public class CategoryDAOFileImpl implements CategoryDAO {
         Category categoryToBeDeleted = read(category.getId());
         categories.remove(categoryToBeDeleted);
         saveCategoryFile();
+    }
+
+    @Override
+    public boolean hasEntries(Category category) {
+        return expenseDAO.readByCategory(category).size() > 0;
     }
 }

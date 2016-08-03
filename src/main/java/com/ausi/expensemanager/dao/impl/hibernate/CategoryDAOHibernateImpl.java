@@ -70,4 +70,15 @@ public class CategoryDAOHibernateImpl implements CategoryDAO {
         transaction.commit();
         session.close();
     }
+
+
+    @Override
+    public boolean hasEntries(Category category) {
+
+        Session session = factory.openSession();
+        Query query = session.createQuery("select count(*) from Expense where categoryId = :catid");
+        query.setParameter("catid", category.getId());
+        int count = ((Long)query.uniqueResult()).intValue();
+        return count > 0;
+    }
 }

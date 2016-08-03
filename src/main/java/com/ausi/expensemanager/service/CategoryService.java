@@ -3,7 +3,9 @@ package com.ausi.expensemanager.service;
 import com.ausi.expensemanager.dao.impl.file.CategoryDAOFileImpl;
 import com.ausi.expensemanager.dao.impl.hibernate.CategoryDAOHibernateImpl;
 import com.ausi.expensemanager.dao.interf.CategoryDAO;
+import com.ausi.expensemanager.dao.interf.ExpenseDAO;
 import com.ausi.expensemanager.domain.Category;
+import com.ausi.expensemanager.domain.Expense;
 
 import java.util.List;
 
@@ -36,5 +38,9 @@ public class CategoryService {
 
     public void delete(Category category) {
         categoryDAO.delete(category);
+    }
+
+    public boolean hasEntries(Category category){
+        return categoryDAO.hasEntries(category);
     }
 }

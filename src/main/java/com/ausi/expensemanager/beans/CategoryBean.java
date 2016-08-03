@@ -8,6 +8,7 @@ import com.ausi.expensemanager.domain.Category;
 import com.ausi.expensemanager.service.CategoryService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
@@ -75,14 +76,12 @@ public class CategoryBean implements Serializable {
     }
 
     public void delete(Category category){
-        //TODO: Check if category got no associations
-        categoryService.delete(category);
-        loadCategories();
+        if(!categoryService.hasEntries(category)) {
+            categoryService.delete(category);
+            loadCategories();
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error!","You can't delete Categories that aren't empty!"));
+        }
     }
-/*
-    public void delete(Category e){
-        System.out.println(e);
-    }*/
-
 
 }

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://java.sun.com/jsf/html">
 <h:head>
     <title>Expense Manager</title>
 </h:head>
@@ -36,7 +37,7 @@
             </b:row>
         </h:form>
         <b:row>
-            <b:dataTable value="#{categoryBean.categories}" var="cat">
+            <b:dataTable value="#{categoryBean.categories}" var="cat" id="categoryTable">
                 <b:dataTableColumn value="#{cat.id}"/>
                 <b:dataTableColumn value="#{cat.name}"/>
                 <h:column>
@@ -49,6 +50,7 @@
                     </h:form>
                 </h:column>
             </b:dataTable>
+            <b:messages globalOnly="true" value="Error"/>
         </b:row>
     </b:container>
 </h:body>

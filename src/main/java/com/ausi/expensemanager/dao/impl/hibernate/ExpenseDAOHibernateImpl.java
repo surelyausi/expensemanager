@@ -5,7 +5,9 @@ import com.ausi.expensemanager.domain.Category;
 import com.ausi.expensemanager.domain.Expense;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -50,19 +52,28 @@ public class ExpenseDAOHibernateImpl implements ExpenseDAO{
     public void update(Expense expense) {
         Session session = factory.openSession();
         session.update(expense);
+        session.close();
 
     }
 
     @Override
     public void delete(Expense expense) {
         Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+
         session.delete(expense);
+
+        transaction.commit();
+        session.close();
     }
 
     @Override
     public List<Expense> readByCategory(Category category) {
-        //TODO: READ BY CATEGORY EVERYWHERE
-        return null;
+        Session session = factory.openSession();
+        Query query = session.createQuery("from Expense where Expense.categoryId = :catid");
+        query.setParameter("catid", category.getId());
+        return query.list();
     }
+
 
 }
